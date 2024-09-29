@@ -29,7 +29,7 @@ data "aws_ecrpublic_authorization_token" "token" {
 
 locals {
   name   = "karpentercluster"
-  region = "eu-east-1"
+  region = "us-east-1"
 
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
@@ -99,26 +99,26 @@ module "eks" {
   subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.intra_subnets
 
-  eks_managed_node_groups = {
-    karpenter = {
-      ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["t2.small"]
+  # eks_managed_node_groups = {
+  #   karpenter = {
+  #     ami_type       = "AL2023_x86_64_STANDARD"
+  #     instance_types = ["t2.small"]
 
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+  #     min_size     = 1
+  #     max_size     = 2
+  #     desired_size = 1
 
-      /*taints = {
-        # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
-        # The pods that do not tolerate this taint should run on nodes created by Karpenter
-        addons = {
-          key    = "CriticalAddonsOnly"
-          value  = "true"
-          effect = "NO_SCHEDULE"
-        },
-      }*/
-    }
-  }
+  #     /*taints = {
+  #       # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
+  #       # The pods that do not tolerate this taint should run on nodes created by Karpenter
+  #       addons = {
+  #         key    = "CriticalAddonsOnly"
+  #         value  = "true"
+  #         effect = "NO_SCHEDULE"
+  #       },
+  #     }*/
+  #   }
+  # }
 
   # cluster_tags = merge(local.tags, {
   #   NOTE - only use this option if you are using "attach_cluster_primary_security_group"
