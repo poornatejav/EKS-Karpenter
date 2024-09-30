@@ -594,7 +594,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
               operator: Gt
               values: ["2"]
       limits:
-        cpu: 1000
+        cpu: 3000
       disruption:
         consolidationPolicy: WhenEmpty
         consolidateAfter: 30s
@@ -610,7 +610,7 @@ resource "kubectl_manifest" "karpenter_node_pool_new" {
     apiVersion: karpenter.sh/v1beta1
     kind: NodePool
     metadata:
-      name: default1
+      name: default
     spec:
       template:
         spec:
@@ -634,7 +634,7 @@ resource "kubectl_manifest" "karpenter_node_pool_new" {
               value: "true"
               effect: "NoSchedule"
       limits:
-        cpu: 1000
+        cpu: 4000
       disruption:
         consolidationPolicy: WhenEmpty
         consolidateAfter: 30s
