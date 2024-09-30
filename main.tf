@@ -556,7 +556,7 @@ resource "kubectl_manifest" "karpenter_node_class" {
       role: ${module.karpenter.node_iam_role_name}
       subnetSelectorTerms:
         - tags:
-            karpenter.sh/discovery: "teja"
+            karpenter.sh/discovery: ${local.name}
       securityGroupSelectorTerms:
         - tags:
             karpenter.sh/discovery: ${module.eks.cluster_name}
@@ -643,4 +643,12 @@ resource "kubectl_manifest" "karpenter_node_pool_new" {
   depends_on = [
     kubectl_manifest.karpenter_node_class
   ]
+}
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "private_subnets" {
+  value = module.vpc.private_subnets
 }
