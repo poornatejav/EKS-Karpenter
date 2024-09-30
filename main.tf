@@ -567,7 +567,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
   ]
 }
 
-resource "kubectl_manifest" "karpenter_node_pool" {
+resource "kubectl_manifest" "karpenter_node_pool_new" {
   yaml_body = <<-YAML
     apiVersion: karpenter.sh/v1beta1
     kind: NodePool
